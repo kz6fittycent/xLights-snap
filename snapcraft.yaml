@@ -1,0 +1,71 @@
+name: xlights-kz6fittycent
+adopt-info: xlights
+summary: xLights is a sequencer for Lights.
+description: |
+  xLights has usb and E1.31 drivers. You can create sequences in this object oriented program.     
+  You can create playlists, schedule them, test your hardware, convert between different sequencers.
+  
+license: GPL-3.0
+
+base: core18
+grade: stable
+confinement: strict
+
+apps:
+  xlights:
+    command: xlights
+    environment:
+      LC_ALL: C.UTF-8
+    plugs:
+      - mount-observe
+      - network-control
+      - process-control
+      - system-observe
+      - hardware-observe
+      - network
+      - home
+      - raw-usb
+      - desktop
+      - desktop-legacy
+      - browser-support
+      
+parts:
+  xlights:
+    source: https://github.com/smeighan/xLights
+    source-type: git
+    plugin: make
+    override-pull: |
+      snapcraftctl pull
+      snapcraftctl set-version "$(git describe --tags | sed 's/^v//' | cut -d "-" -f1)"
+      
+    build-packages:
+      - build-essential
+      - libgtk-3-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - freeglut3-dev
+      - libavcodec-dev
+      - libavformat-dev
+      - libswscale-dev
+      - libsdl2-dev
+      - libportmidi-dev
+      - libzstd-dev
+      - libcurl4-openssl-dev
+      - libltc-dev
+      - cbp2make
+      
+    stage-packages:
+      - build-essential
+      - libgtk-3-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - freeglut3-dev
+      - libavcodec-dev
+      - libavformat-dev
+      - libswscale-dev
+      - libsdl2-dev
+      - libportmidi-dev
+      - libzstd-dev
+      - libcurl4-openssl-dev
+      - libltc-dev
+      - cbp2make 
